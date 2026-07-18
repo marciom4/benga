@@ -1,0 +1,53 @@
+Fonte: transcrição manual de screenshot de página inteira (site inacessível diretamente).
+Textos marcados [PARÁFRASE] não estavam legíveis com confiança na imagem; são
+aproximações de nível-título, a confirmar/corrigir pelo usuário.
+
+--- SEÇÃO 1: HERO ---
+JOARES MENDES DE FREITAS
+A
+JORNADA
+DE UM SONHADOR
+Transformando sonhos em realização
+[CTA] LEIA OS PRIMEIROS CAPÍTULOS →
+
+--- SEÇÃO 2: FAIXA MOSTARDA (4 blurbs) ---
+[PARÁFRASE] Quatro frases/perguntas curtas em colunas — tom de gancho/curiosidade sobre a
+história (ex.: "Você já se sentiu traído por quem devia te proteger?" / "E se seu pior
+momento fosse o início do seu propósito?" — estilo a confirmar com o usuário).
+
+--- SEÇÃO 3: CITAÇÃO ---
+"Em seu coração o homem planeja o seu caminho, mas o Senhor determina os seus passos."
+PROVÉRBIOS 16:9
+
+--- SEÇÃO 4: A HISTÓRIA ---
+UMA HISTÓRIA DE 4 MIL ANOS.
+RELEVANTE COMO HOJE.
+[PARÁFRASE] Parágrafo de contexto — provavelmente introduz a história bíblica de José,
+vendido pelos irmãos, e como sua jornada de sonhos e provação ecoa até hoje.
+
+--- SEÇÃO 5: QUATRO MARCAS DO SONHADOR ---
+QUATRO MARCAS DO SONHADOR
+[PARÁFRASE] Card de texto listando quatro características/marcas do "sonhador" (ex.:
+propósito, resiliência, fé, visão — a confirmar).
+
+--- SEÇÃO 6: LEIA AGORA — INTRODUÇÃO ---
+LEIA AGORA — INTRODUÇÃO
+[PARÁFRASE] Trecho de abertura do livro, com letra capitular ("T..."), texto corrido em
+vários parágrafos.
+
+--- SEÇÃO 7: DEPOIMENTOS ---
+O QUE DIZEM SOBRE O LIVRO
+[PARÁFRASE] Cartão(ões) de depoimento de leitores.
+
+--- SEÇÃO 8: AUTOR ---
+[Foto do autor, retrato circular sobre fundo escuro — sem legenda legível]
+
+--- SEÇÃO 9: CTA FINAL / PEDIDO ---
+SUA JORNADA COMEÇA AQUI
+[PARÁFRASE] "Faça seu pedido e receba o link do seu ebook" (subtítulo)
+Formulário: Nome completo / E-mail / Telefone / Endereço de entrega
+Valor do pedido: R$ 35,00
+QR code de pagamento (PIX)
+[CTA] PAGAR AGORA
+[CTA] ENVIAR PEDIDO
+[CTA] WHATSAPP (botão verde)

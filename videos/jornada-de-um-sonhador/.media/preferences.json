@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "preferences": {
+    "destination": {
+      "value": "ig-feed",
+      "confirmed_in": [
+        "jornada-de-um-sonhador"
+      ],
+      "updated_at": "2026-07-18T23:47:12.577Z"
+    },
+    "aspect": {
+      "value": "1080x1080",
+      "confirmed_in": [
+        "jornada-de-um-sonhador"
+      ],
+      "updated_at": "2026-07-18T23:47:12.624Z"
+    },
+    "language": {
+      "value": "pt",
+      "confirmed_in": [
+        "jornada-de-um-sonhador"
+      ],
+      "updated_at": "2026-07-18T23:47:12.689Z"
+    },
+    "flow": {
+      "value": "automation",
+      "confirmed_in": [
+        "jornada-de-um-sonhador"
+      ],
+      "updated_at": "2026-07-18T23:47:12.735Z"
+    },
+    "storyboard": {
+      "value": "yes",
+      "confirmed_in": [
+        "jornada-de-um-sonhador"
+      ],
+      "updated_at": "2026-07-18T23:47:12.781Z"
+    },
+    "style_preset.product-launch-video": {
+      "value": "coral",
+      "confirmed_in": [
+        "jornada-de-um-sonhador"
+      ],
+      "updated_at": "2026-07-18T23:49:31.002Z"
+    }
+  },
+  "sightings": {}
+}
