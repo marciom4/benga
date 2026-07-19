@@ -6,7 +6,7 @@
   </head>
   <body>
     <template>
-      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script src="assets/vendor/gsap.min.js"></script>
       <style>
         /* Root: styled by #root only — a class on the data-composition-id element
            gets scoped out at assembly (see hyperframes-core Pitfall 3). */
@@ -69,6 +69,8 @@
           place-items: center;
         }
         #q02quote-glow {
+          grid-column: 1;
+          grid-row: 1;
           width: 46cqw;
           height: 46cqw;
           border-radius: 50%;
@@ -140,12 +142,12 @@
         }
       </style>
 
-      <div id="root" data-composition-id="02-quote" data-width="1080" data-height="1080" data-duration="7">
+      <div id="root" data-composition-id="02-quote" data-width="1080" data-height="1080" data-duration="7.4">
         <div
           id="q02quote-scene"
           class="clip"
           data-start="0"
-          data-duration="7"
+          data-duration="7.4"
           data-track-index="0"
         >
           <!-- 40/60 region split -->

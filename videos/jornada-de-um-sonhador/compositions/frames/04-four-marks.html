@@ -113,7 +113,7 @@
           font-weight: 400;
           font-size: 15px;
           line-height: 1.4;
-          color: rgba(11, 8, 6, 0.72);
+          color: rgb(45, 45, 45);
         }
       </style>
 
@@ -122,11 +122,12 @@
         data-composition-id="04-four-marks"
         data-width="1080"
         data-height="1080"
+        data-duration="10.5"
       >
         <!-- full-bleed ground: dedicated clip, never painted on #root itself -->
-        <div class="clip f04-bg" id="f04-bg" data-start="0" data-duration="10" data-track-index="0"></div>
+        <div class="clip f04-bg" id="f04-bg" data-start="0" data-duration="10.5" data-track-index="0"></div>
 
-        <div class="clip f04-title-wrap" data-start="0" data-duration="10" data-track-index="1">
+        <div id="f04-title-wrap" class="clip f04-title-wrap" data-start="0" data-duration="10.5" data-track-index="1">
           <h1 class="f04-title" id="f04-title">
             <span class="f04-word" id="f04-word-1">QUATRO</span>
             <span class="f04-word" id="f04-word-2">MARCAS</span>
@@ -135,7 +136,7 @@
           </h1>
         </div>
 
-        <div class="clip f04-grid-wrap" data-start="0" data-duration="10" data-track-index="2">
+        <div id="f04-grid-wrap" class="clip f04-grid-wrap" data-start="0" data-duration="10.5" data-track-index="2">
           <div class="f04-grid">
             <div class="f04-card" id="f04-card-1">
               <div class="f04-card-icon">01</div>
@@ -161,7 +162,7 @@
         </div>
       </div>
 
-      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script src="assets/vendor/gsap.min.js"></script>
       <script>
         (function () {
           window.__timelines = window.__timelines || {};

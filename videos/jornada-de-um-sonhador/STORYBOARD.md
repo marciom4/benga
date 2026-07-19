@@ -37,7 +37,7 @@ music: none
 - voiceover: ""
 - duration: 6s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/01-hook.html
 - type: hook
 - persuasion: Curiosity gap
@@ -70,7 +70,7 @@ sobe e assenta abaixo; tudo segura o quadro — só o glow âmbar mantém um jit
 - voiceover: ""
 - duration: 7s
 - transition_in: crossfade
-- status: outline
+- status: animated
 - src: compositions/frames/02-quote.html
 - type: pain_point
 - persuasion: Authority by association
@@ -104,7 +104,7 @@ respiro.
 - voiceover: ""
 - duration: 8s
 - transition_in: zoom-through
-- status: outline
+- status: animated
 - src: compositions/frames/03-premise.html
 - type: product_intro
 - persuasion: Negative contrast (antigo ↔ atual)
@@ -137,7 +137,7 @@ muito baixa); headline estático e legível.
 - voiceover: ""
 - duration: 10s
 - transition_in: crossfade
-- status: outline
+- status: animated
 - src: compositions/frames/04-four-marks.html
 - type: feature_showcase
 - persuasion: Rule of three (estendida a quatro) / Value stacking
@@ -175,7 +175,7 @@ sutil bounded na borda coral do card em foco; resto estático.
 - voiceover: ""
 - duration: 7s
 - transition_in: crossfade
-- status: outline
+- status: animated
 - src: compositions/frames/05-testimonial.html
 - type: social_proof
 - persuasion: Social proof
@@ -208,7 +208,7 @@ sutil bounded no brilho da borda coral — frame de respiro.
 - voiceover: ""
 - duration: 10s
 - transition_in: zoom-through
-- status: outline
+- status: animated
 - src: compositions/frames/06-cta.html
 - type: cta
 - persuasion: Risk reversal / Scarcity-free direct ask
