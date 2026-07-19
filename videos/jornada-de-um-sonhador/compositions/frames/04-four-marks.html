@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head is metadata only for the source file; the runtime ignores it -->
+  </head>
+  <body>
+    <template>
+      <style>
+        /* Root: style by #root, never a class (scoping rule — see hyperframes-core sub-compositions.md) */
+        #root {
+          position: relative;
+          width: 1080px;
+          height: 1080px;
+          overflow: hidden;
+          font-family: "Inter", sans-serif;
+        }
+
+        .f04-bg {
+          position: absolute;
+          inset: 0;
+          background: #0b0806;
+        }
+
+        .f04-title-wrap {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding-top: 90px;
+          text-align: center;
+          pointer-events: none;
+        }
+
+        .f04-title {
+          margin: 0;
+          padding: 0 60px;
+          font-family: "Bebas Neue";
+          font-weight: 400;
+          font-size: 48px;
+          line-height: 1.0;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #f4ead9;
+        }
+
+        .f04-word {
+          display: inline-block;
+          will-change: transform, opacity;
+        }
+
+        .f04-grid-wrap {
+          position: absolute;
+          top: 246px;
+          left: 90px;
+          width: 900px;
+          height: 544px;
+        }
+
+        .f04-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 24px;
+          width: 100%;
+          height: 100%;
+        }
+
+        .f04-card {
+          position: relative;
+          box-sizing: border-box;
+          background: #ffffff;
+          border-top: 5px solid #e2823f;
+          border-radius: 0;
+          box-shadow: none;
+          padding: 22px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          will-change: transform, opacity;
+        }
+
+        .f04-card-icon {
+          box-sizing: border-box;
+          width: 56px;
+          height: 56px;
+          background: #e2823f;
+          color: #ffffff;
+          border-radius: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Bebas Neue";
+          font-weight: 400;
+          font-size: 26px;
+          letter-spacing: 1px;
+        }
+
+        .f04-card-title {
+          margin: 0;
+          font-family: "Bebas Neue";
+          font-weight: 400;
+          font-size: 27px;
+          line-height: 1.1;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: #0b0806;
+        }
+
+        .f04-card-body {
+          margin: 0;
+          font-family: "Inter";
+          font-weight: 400;
+          font-size: 15px;
+          line-height: 1.4;
+          color: rgba(11, 8, 6, 0.72);
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="04-four-marks"
+        data-width="1080"
+        data-height="1080"
+      >
+        <!-- full-bleed ground: dedicated clip, never painted on #root itself -->
+        <div class="clip f04-bg" id="f04-bg" data-start="0" data-duration="10" data-track-index="0"></div>
+
+        <div class="clip f04-title-wrap" data-start="0" data-duration="10" data-track-index="1">
+          <h1 class="f04-title" id="f04-title">
+            <span class="f04-word" id="f04-word-1">QUATRO</span>
+            <span class="f04-word" id="f04-word-2">MARCAS</span>
+            <span class="f04-word" id="f04-word-3">DO</span>
+            <span class="f04-word" id="f04-word-4">SONHADOR</span>
+          </h1>
+        </div>
+
+        <div class="clip f04-grid-wrap" data-start="0" data-duration="10" data-track-index="2">
+          <div class="f04-grid">
+            <div class="f04-card" id="f04-card-1">
+              <div class="f04-card-icon">01</div>
+              <p class="f04-card-title">Fé</p>
+              <p class="f04-card-body">Acreditou no sonho antes de vê-lo cumprido.</p>
+            </div>
+            <div class="f04-card" id="f04-card-2">
+              <div class="f04-card-icon">02</div>
+              <p class="f04-card-title">Resiliência</p>
+              <p class="f04-card-body">Não desistiu mesmo nos anos mais difíceis.</p>
+            </div>
+            <div class="f04-card" id="f04-card-3">
+              <div class="f04-card-icon">03</div>
+              <p class="f04-card-title">Perdão</p>
+              <p class="f04-card-body">Escolheu perdoar quem o feriu profundamente.</p>
+            </div>
+            <div class="f04-card" id="f04-card-4">
+              <div class="f04-card-icon">04</div>
+              <p class="f04-card-title">Propósito</p>
+              <p class="f04-card-body">Viu propósito maior em cada etapa vivida.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+
+          var bg = document.getElementById("f04-bg");
+          var words = [
+            document.getElementById("f04-word-1"),
+            document.getElementById("f04-word-2"),
+            document.getElementById("f04-word-3"),
+            document.getElementById("f04-word-4"),
+          ];
+          var card1 = document.getElementById("f04-card-1");
+          var card2 = document.getElementById("f04-card-2");
+          var card3 = document.getElementById("f04-card-3");
+          var card4 = document.getElementById("f04-card-4");
+
+          // Scene 1 (0.0–1.2s): ground fades up, title reveals per-word
+          // (dynamic-content-sequencing.md mechanics: each item gets its own
+          // pre-set start offset instead of a runtime search — here the "items"
+          // are the words of one headline instead of swapped content blocks).
+          tl.fromTo(bg, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 0);
+
+          var WORD_GAP = 0.16;
+          var WORD_DUR = 0.5;
+          var WORD_START = 0.15;
+          words.forEach(function (w, i) {
+            tl.fromTo(
+              w,
+              { opacity: 0, y: 20 },
+              { opacity: 1, y: 0, duration: WORD_DUR, ease: "power3.out" },
+              WORD_START + i * WORD_GAP
+            );
+          });
+
+          // Cards self-assemble one at a time, cluster (grid center) -> outward
+          // to their own grid slot (center-outward-expansion.md mechanics: each
+          // card's rest position is 0,0 offset baked in by CSS Grid; the tween
+          // interpolates FROM an offset that places it at the shared grid
+          // center TO that rest position).
+          var CARD_DUR = 0.85;
+          var CARD_EASE = "power3.out";
+
+          // Scene 2 (1.2–3.2s): card 1 "FÉ" — top-left, from grid center
+          tl.fromTo(
+            card1,
+            { x: 231, y: 142, scale: 0.55, opacity: 0 },
+            { x: 0, y: 0, scale: 1, opacity: 1, duration: CARD_DUR, ease: CARD_EASE },
+            1.3
+          );
+
+          // Scene 3 (3.2–5.2s): card 2 "RESILIÊNCIA" — top-right, from grid center
+          tl.fromTo(
+            card2,
+            { x: -231, y: 142, scale: 0.55, opacity: 0 },
+            { x: 0, y: 0, scale: 1, opacity: 1, duration: CARD_DUR, ease: CARD_EASE },
+            3.3
+          );
+
+          // Scene 4 (5.2–7.2s): card 3 "PERDÃO" — bottom-left, from grid center
+          tl.fromTo(
+            card3,
+            { x: 231, y: -142, scale: 0.55, opacity: 0 },
+            { x: 0, y: 0, scale: 1, opacity: 1, duration: CARD_DUR, ease: CARD_EASE },
+            5.3
+          );
+
+          // Scene 5 (7.2–9.0s): card 4 "PROPÓSITO" — bottom-right, completes the grid
+          tl.fromTo(
+            card4,
+            { x: -231, y: -142, scale: 0.55, opacity: 0 },
+            { x: 0, y: 0, scale: 1, opacity: 1, duration: CARD_DUR, ease: CARD_EASE },
+            7.3
+          );
+
+          // Scene 6 (9.0–10.0s): hold — grid complete; only a subtle bounded
+          // jitter on the coral border of the card in focus (the last-landed
+          // card 4). sine-wave-loop.md mechanics: a phase 0 -> 2*PI*CYCLES
+          // drives Math.sin() into a tiny scale offset; sin(0) = 0 so there is
+          // no jump from the settled entrance state. Finite, non-looping.
+          var jitterPhase = { p: 0 };
+          tl.to(
+            jitterPhase,
+            {
+              p: Math.PI * 2 * 1.5,
+              duration: 1.0,
+              ease: "none",
+              onUpdate: function () {
+                var s = 1 + Math.sin(jitterPhase.p) * 0.008;
+                gsap.set(card4, { scale: s });
+              },
+            },
+            9.0
+          );
+
+          window.__timelines["04-four-marks"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
