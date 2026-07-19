@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head is metadata for the source file only; the runtime ignores it -->
+  </head>
+  <body>
+    <template>
+      <style>
+        /* Root: styled by #root only (class on root would be scoped out — see hyperframes-core Pitfall 3). */
+        #root {
+          position: relative;
+          width: 1080px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Bebas Neue", sans-serif;
+        }
+        #root * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* ── Full-bleed coral environment (Feature Stat ground) — on a class="clip" child, never on #root ── */
+        #premise-bg {
+          position: absolute;
+          inset: 0;
+          background: #e2823f;
+          opacity: 0;
+        }
+        #premise-bg::before {
+          /* Signature 45° hatch, 6% ink — frame.md components.diagonal-hatch, verbatim stops */
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: repeating-linear-gradient(45deg, transparent 0 20px, rgba(0, 0, 0, 0.06) 20px 40px);
+          pointer-events: none;
+        }
+
+        /* ── Wallpaper numeral "4000" — 12% ink, dead-center behind the headline stack ── */
+        #premise-numeral {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Bebas Neue", sans-serif;
+          font-weight: 400;
+          font-size: 34cqw;
+          line-height: 1;
+          letter-spacing: -0.01em;
+          color: rgba(0, 0, 0, 0.12);
+          opacity: 0;
+          pointer-events: none;
+          will-change: transform, opacity;
+        }
+
+        /* ── Headline stack — ink-on-coral, never white ── */
+        .premise-line {
+          position: absolute;
+          left: 6cqw;
+          right: 6cqw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          color: #0b0806;
+          text-transform: uppercase;
+          font-family: "Bebas Neue", sans-serif;
+          font-weight: 400;
+          line-height: 1;
+        }
+        #premise-line1 {
+          top: 20%;
+          height: 14%;
+          font-size: 2.8cqw;
+          letter-spacing: 3px;
+          gap: 0.4em;
+        }
+        #premise-line1 .word {
+          opacity: 0;
+        }
+        #premise-line2 {
+          top: 40%;
+          height: 20%;
+          font-size: 9.2cqw;
+          letter-spacing: 4px;
+          opacity: 0;
+          filter: blur(0px);
+          will-change: transform, filter, opacity;
+        }
+        #premise-line3 {
+          top: 64%;
+          height: 14%;
+          font-size: 2.8cqw;
+          letter-spacing: 3px;
+          gap: 0.4em;
+        }
+        #premise-line3 .word {
+          opacity: 0;
+        }
+      </style>
+
+      <div id="root" data-composition-id="03-premise" data-width="1080" data-height="1080" data-duration="8">
+        <!-- Scene 1 (0.0–1.4s): coral environment + hatch rises; "4000" wallpaper numeral blooms dead-center -->
+        <div id="premise-bg" class="clip" data-start="0" data-duration="8" data-track-index="0"></div>
+        <div id="premise-numeral" class="clip" data-start="0" data-duration="8" data-track-index="1">4000</div>
+
+        <!-- Scene 2 (1.4–3.0s): "UMA HISTÓRIA DE" — per-word staggered reveal, upper, smaller -->
+        <div id="premise-line1" class="premise-line clip" data-start="1.4" data-duration="6.6" data-track-index="2">
+          <span class="word">UMA</span><span class="word">HISTÓRIA</span><span class="word">DE</span>
+        </div>
+
+        <!-- Scene 3 (3.0–4.6s): "4 MIL ANOS." — kinetic beat-slam + value-scaled emphasis pulse, dominant -->
+        <div id="premise-line2" class="premise-line clip" data-start="3.0" data-duration="5.0" data-track-index="3">
+          4 MIL ANOS.
+        </div>
+
+        <!-- Scene 4 (4.6–6.4s): "RELEVANTE COMO HOJE." — per-word staggered reveal, completes the stack -->
+        <div id="premise-line3" class="premise-line clip" data-start="4.6" data-duration="3.4" data-track-index="4">
+          <span class="word">RELEVANTE</span><span class="word">COMO</span><span class="word">HOJE.</span>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        // ── Scene 1 (0.0–1.4s): environment fade-up + wallpaper numeral bloom ──
+        // Ambient-glow-bloom mechanics: opacity 0→peak with a gentle scale swell, un-triggered.
+        tl.fromTo("#premise-bg", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
+        tl.fromTo(
+          "#premise-numeral",
+          { opacity: 0, scale: 0.82 },
+          { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out" },
+          0.15,
+        );
+
+        // ── Scene 2 (1.4–3.0s): "UMA HISTÓRIA DE" — per-word staggered reveal, power3 long-tail ──
+        const line1Words = gsap.utils.toArray("#premise-line1 .word");
+        line1Words.forEach((w, i) => {
+          tl.fromTo(w, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.4 + i * 0.35);
+        });
+
+        // ── Scene 3 (3.0–4.6s): "4 MIL ANOS." — kinetic beat-slam (hard attack, no overshoot ease) ──
+        // synchronized with a value-scaled emphasis pulse (counting-dynamic-scale's grow-in-place signature,
+        // adapted from a literal count to a single scale pulse since there is no digit to count).
+        tl.fromTo(
+          "#premise-line2",
+          { opacity: 0, scale: 0.55, filter: "blur(14px)" },
+          { opacity: 1, scale: 1.05, filter: "blur(0px)", duration: 0.5, ease: "power4.out" },
+          3.0,
+        );
+        tl.to("#premise-line2", { scale: 1.0, duration: 0.35, ease: "power2.inOut" }, 3.5);
+
+        // ── Scene 4 (4.6–6.4s): "RELEVANTE COMO HOJE." — per-word staggered reveal, completes the headline ──
+        const line3Words = gsap.utils.toArray("#premise-line3 .word");
+        line3Words.forEach((w, i) => {
+          tl.fromTo(w, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 4.6 + i * 0.4);
+        });
+
+        // ── Scene 5 (6.4–8.0s): hold — headline static/legible; numeral keeps only a bounded, low-amplitude
+        // jitter (sine-wave-loop, half-cycle so it eases back to rest by the last frame — not a loop). ──
+        const numeralEl = document.getElementById("premise-numeral");
+        const numeralPhase = { p: 0 };
+        tl.to(
+          numeralPhase,
+          {
+            p: Math.PI, // half cycle: sin(0)=0 → no jump in, sin(π)=0 → settles by the last frame
+            duration: 1.6,
+            ease: "none",
+            onUpdate: () => {
+              const s = Math.sin(numeralPhase.p);
+              numeralEl.style.transform = `scale(${1 + s * 0.012})`;
+            },
+          },
+          6.4,
+        );
+
+        window.__timelines["03-premise"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

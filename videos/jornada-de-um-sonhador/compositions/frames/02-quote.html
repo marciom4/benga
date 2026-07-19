@@ -1,0 +1,344 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head is metadata for the source file only; the runtime ignores it -->
+  </head>
+  <body>
+    <template>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <style>
+        /* Root: styled by #root only — a class on the data-composition-id element
+           gets scoped out at assembly (see hyperframes-core Pitfall 3). */
+        #root {
+          position: relative;
+          width: 1080px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Inter", sans-serif;
+        }
+
+        /* ── the single full-duration clip (full-bleed ground lives here, never on #root) ── */
+        .q02quote-scene {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          background: #0b0806;
+        }
+
+        /* ── region-split panels ── */
+        .q02quote-panel {
+          position: absolute;
+          top: 0;
+          height: 100%;
+        }
+        #q02quote-panel-coral {
+          left: 0;
+          width: 40cqw;
+          background: #e2823f;
+          overflow: hidden;
+        }
+        #q02quote-panel-coral::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: repeating-linear-gradient(
+            45deg,
+            transparent 0 20px,
+            rgba(0, 0, 0, 0.06) 20px 40px
+          );
+          pointer-events: none;
+        }
+        #q02quote-panel-black {
+          right: 0;
+          width: 60cqw;
+          background: #0b0806;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 5cqw;
+        }
+
+        /* ── giant-mark stage (coral panel) ── */
+        #q02quote-mark-stage {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
+        }
+        #q02quote-glow {
+          width: 46cqw;
+          height: 46cqw;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(11, 8, 6, 0.6) 0%, rgba(11, 8, 6, 0) 70%);
+          opacity: 0;
+          pointer-events: none;
+          will-change: opacity;
+        }
+        #q02quote-giant-mark {
+          grid-column: 1;
+          grid-row: 1;
+          width: 30cqw;
+          height: auto;
+          overflow: visible;
+        }
+        #q02quote-giant-mark path {
+          fill: #0b0806;
+          fill-opacity: 0;
+          stroke: #0b0806;
+          stroke-width: 5;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+
+        /* ── pull quote (black panel) ── */
+        .q02quote-line {
+          font-family: "Inter", sans-serif;
+          font-weight: 300;
+          font-style: italic;
+          font-size: 2.4cqw;
+          line-height: 1.5;
+          color: #f4ead9;
+        }
+        #q02quote-clause2 {
+          margin-top: 0.3cqw;
+        }
+        .q02quote-word {
+          display: inline-block;
+          margin-right: 0.32em;
+        }
+        .q02quote-word--accent {
+          color: #e2823f;
+        }
+
+        #q02quote-foot {
+          margin-top: 2.6cqw;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        #q02quote-accent-line {
+          width: 60px;
+          height: 4px;
+          overflow: visible;
+        }
+        #q02quote-accent-line line {
+          stroke: #e2823f;
+          stroke-width: 4;
+          stroke-linecap: round;
+        }
+        #q02quote-attribution {
+          margin-top: 0.9cqw;
+          font-family: "Inter", sans-serif;
+          font-weight: 600;
+          font-size: 14px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #e2823f;
+        }
+      </style>
+
+      <div id="root" data-composition-id="02-quote" data-width="1080" data-height="1080" data-duration="7">
+        <div
+          id="q02quote-scene"
+          class="clip"
+          data-start="0"
+          data-duration="7"
+          data-track-index="0"
+        >
+          <!-- 40/60 region split -->
+          <div id="q02quote-panel-coral" class="q02quote-panel">
+            <div id="q02quote-mark-stage">
+              <div id="q02quote-glow"></div>
+              <svg id="q02quote-giant-mark" viewBox="0 0 220 175" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  id="q02quote-mark-a"
+                  d="M70 10 C40 10 20 35 20 65 C20 92 37 110 60 106 C56 132 40 152 14 162 L28 170 C64 151 85 114 82 74 C82 44 80 10 70 10 Z"
+                />
+                <path
+                  id="q02quote-mark-b"
+                  transform="translate(120,0)"
+                  d="M70 10 C40 10 20 35 20 65 C20 92 37 110 60 106 C56 132 40 152 14 162 L28 170 C64 151 85 114 82 74 C82 44 80 10 70 10 Z"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <div id="q02quote-panel-black" class="q02quote-panel">
+            <div id="q02quote-clause1" class="q02quote-line">
+              <span id="q02quote-w1-1" class="q02quote-word">Em</span
+              ><span id="q02quote-w1-2" class="q02quote-word">seu</span
+              ><span id="q02quote-w1-3" class="q02quote-word">coração</span
+              ><span id="q02quote-w1-4" class="q02quote-word">o</span
+              ><span id="q02quote-w1-5" class="q02quote-word">homem</span
+              ><span id="q02quote-w1-6" class="q02quote-word">planeja</span
+              ><span id="q02quote-w1-7" class="q02quote-word">o</span
+              ><span id="q02quote-w1-8" class="q02quote-word">seu</span
+              ><span id="q02quote-w1-9" class="q02quote-word">caminho,</span>
+            </div>
+            <div id="q02quote-clause2" class="q02quote-line">
+              <span id="q02quote-w2-1" class="q02quote-word">mas</span
+              ><span id="q02quote-w2-2" class="q02quote-word">o</span
+              ><span id="q02quote-w2-3" class="q02quote-word q02quote-word--accent">Senhor</span
+              ><span id="q02quote-w2-4" class="q02quote-word">determina</span
+              ><span id="q02quote-w2-5" class="q02quote-word">os</span
+              ><span id="q02quote-w2-6" class="q02quote-word">seus</span
+              ><span id="q02quote-w2-7" class="q02quote-word">passos.</span>
+            </div>
+
+            <div id="q02quote-foot">
+              <svg id="q02quote-accent-line" viewBox="0 0 60 4" xmlns="http://www.w3.org/2000/svg">
+                <line x1="2" y1="2" x2="58" y2="2" />
+              </svg>
+              <div id="q02quote-attribution">Provérbios 16:9</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        // ── Scene 1 (0.0–1.0s): panel split settles + giant-mark self-draws ──
+        const PANEL_SLIDE_DUR = 0.7;
+        tl.fromTo(
+          "#q02quote-panel-coral",
+          { xPercent: -100 },
+          { xPercent: 0, duration: PANEL_SLIDE_DUR, ease: "power3.out" },
+          0,
+        );
+        tl.fromTo(
+          "#q02quote-panel-black",
+          { xPercent: 100 },
+          { xPercent: 0, duration: PANEL_SLIDE_DUR, ease: "power3.out" },
+          0,
+        );
+
+        // Measure the giant-mark paths and prep stroke-dasharray/dashoffset (svg-path-draw).
+        const markPaths = document.querySelectorAll("#q02quote-giant-mark path");
+        markPaths.forEach((p) => {
+          const len = p.getTotalLength();
+          p.style.strokeDasharray = String(len);
+          p.style.strokeDashoffset = String(len);
+        });
+
+        const MARK_A_START = 0.12;
+        const MARK_A_DUR = 0.42;
+        const MARK_B_START = 0.4; // ~70% overlap with mark A's draw
+        const MARK_B_DUR = 0.38;
+        const MARK_SETTLE_START = 0.85;
+        const MARK_SETTLE_DUR = 0.3;
+        const MARK_FINAL_OPACITY = 0.35; // giant-mark component spec: 35% ink
+
+        tl.to(
+          "#q02quote-mark-a",
+          { strokeDashoffset: 0, duration: MARK_A_DUR, ease: "power2.out" },
+          MARK_A_START,
+        );
+        tl.to(
+          "#q02quote-mark-b",
+          { strokeDashoffset: 0, duration: MARK_B_DUR, ease: "power2.out" },
+          MARK_B_START,
+        );
+        // Draw-then-fill: strokes settle down to the flat 35%-ink mark, fill fades in to match.
+        tl.to(
+          markPaths,
+          {
+            fillOpacity: MARK_FINAL_OPACITY,
+            strokeOpacity: MARK_FINAL_OPACITY,
+            duration: MARK_SETTLE_DUR,
+            ease: "power1.out",
+          },
+          MARK_SETTLE_START,
+        );
+
+        // ── Scene 2 (1.0–3.2s): first clause, per-word staggered reveal ──
+        const CLAUSE1_START = 1.0;
+        const CLAUSE1_STAGGER = 0.16;
+        const CLAUSE1_WORD_DUR = 0.5;
+        const clause1Ids = [
+          "q02quote-w1-1",
+          "q02quote-w1-2",
+          "q02quote-w1-3",
+          "q02quote-w1-4",
+          "q02quote-w1-5",
+          "q02quote-w1-6",
+          "q02quote-w1-7",
+          "q02quote-w1-8",
+          "q02quote-w1-9",
+        ];
+        clause1Ids.forEach((id, i) => {
+          tl.fromTo(
+            `#${id}`,
+            { autoAlpha: 0, y: 14 },
+            { autoAlpha: 1, y: 0, duration: CLAUSE1_WORD_DUR, ease: "power3.out" },
+            CLAUSE1_START + i * CLAUSE1_STAGGER,
+          );
+        });
+
+        // ── Scene 3 (3.2–5.0s): second clause, per-word staggered reveal, "Senhor" in coral ──
+        const CLAUSE2_START = 3.2;
+        const CLAUSE2_STAGGER = 0.2;
+        const CLAUSE2_WORD_DUR = 0.5;
+        const clause2Ids = [
+          "q02quote-w2-1",
+          "q02quote-w2-2",
+          "q02quote-w2-3",
+          "q02quote-w2-4",
+          "q02quote-w2-5",
+          "q02quote-w2-6",
+          "q02quote-w2-7",
+        ];
+        clause2Ids.forEach((id, i) => {
+          tl.fromTo(
+            `#${id}`,
+            { autoAlpha: 0, y: 14 },
+            { autoAlpha: 1, y: 0, duration: CLAUSE2_WORD_DUR, ease: "power3.out" },
+            CLAUSE2_START + i * CLAUSE2_STAGGER,
+          );
+        });
+
+        // ── Scene 4 (5.0–6.2s): accent-line self-draws, attribution rises beneath it ──
+        const accentLine = document.getElementById("q02quote-accent-line").querySelector("line");
+        const accentLen = accentLine.getTotalLength();
+        accentLine.style.strokeDasharray = String(accentLen);
+        accentLine.style.strokeDashoffset = String(accentLen);
+
+        const ACCENT_LINE_START = 5.05;
+        const ACCENT_LINE_DUR = 0.4;
+        const ATTRIBUTION_START = 5.55;
+        const ATTRIBUTION_DUR = 0.5;
+
+        tl.to(
+          accentLine,
+          { strokeDashoffset: 0, duration: ACCENT_LINE_DUR, ease: "power2.out" },
+          ACCENT_LINE_START,
+        );
+        tl.fromTo(
+          "#q02quote-attribution",
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: ATTRIBUTION_DUR, ease: "power3.out" },
+          ATTRIBUTION_START,
+        );
+
+        // ── Scene 5 (6.2–7.0s): hold — one restrained ambient glow bloom behind the
+        // giant-mark, no breathe/loop (this is the frame's deliberate breather beat). ──
+        const GLOW_BLOOM_START = 6.25;
+        const GLOW_BLOOM_DUR = 0.55;
+        const GLOW_PEAK_OPACITY = 0.3;
+
+        tl.fromTo(
+          "#q02quote-glow",
+          { opacity: 0 },
+          { opacity: GLOW_PEAK_OPACITY, duration: GLOW_BLOOM_DUR, ease: "power2.out" },
+          GLOW_BLOOM_START,
+        );
+
+        window.__timelines["02-quote"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
