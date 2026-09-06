@@ -49,3 +49,40 @@ export GARMIN_EMAIL="seu-email@exemplo.com"
 
 (evite exportar a senha em `GARMIN_PASSWORD` num histórico de shell
 persistente — prefira deixar o script perguntar com `getpass`.)
+
+## Baixar todos os seus dados (`export_data.py`)
+
+Depois de conectar com `connect.py` (a sessão já fica salva), rode:
+
+```bash
+python3 export_data.py
+```
+
+Isso baixa e salva em arquivos `.json` dentro de `garmin-connect/data/`
+(pasta ignorada pelo git — seus dados de saúde nunca vão pro repositório):
+
+- `data/profile.json` — perfil, dispositivos, equipamentos, recordes pessoais, metas
+- `data/trends.json` — tendências de passos, sono, frequência cardíaca de repouso, calorias, body battery, VO2 máx, HRV
+- `data/daily/AAAA-MM-DD.json` — um arquivo por dia com sono detalhado, estresse, SpO2, respiração, hidratação, composição corporal, prontidão de treino
+- `data/activities.json` — lista de atividades
+- `data/activities/<id>.json` — detalhe e splits de cada atividade
+
+Por padrão ele pega **os últimos 7 dias** e **até 20 atividades**, de propósito,
+porque a Garmin também limita quantas requisições você pode fazer por vez
+(foi o erro 429 que vimos antes). Depois que um run pequeno funcionar sem
+erro, pode pedir mais:
+
+```bash
+python3 export_data.py --days 30 --activities-limit 100
+```
+
+Para baixar também o arquivo original de cada atividade (FIT/GPX/etc, dentro
+de um .zip por padrão):
+
+```bash
+python3 export_data.py --download-files
+```
+
+Se der erro de limite de requisições (429) no meio do processo, não tem
+problema: tudo que já foi baixado até ali já está salvo em `data/`. Espere
+um tempo e rode de novo.
