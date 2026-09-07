@@ -85,16 +85,26 @@ def call(label: str, fn, *args, **kwargs):
 
 def export_profile(client: Garmin, out_dir: str) -> None:
     print("Profile & account...")
+    device_last_used = call("device last used", client.get_device_last_used)
+    user_profile_number = (device_last_used or {}).get("userProfileNumber")
+
+    gear = None
+    if user_profile_number:
+        gear = call("gear", client.get_gear, user_profile_number)
+    else:
+        print("  skip gear: no userProfileNumber from get_device_last_used")
+
     profile = {
         "full_name": call("full name", client.get_full_name),
         "user_profile": call("user profile", client.get_user_profile),
         "unit_system": call("unit system", client.get_unit_system),
         "devices": call("devices", client.get_devices),
-        "gear": call("gear", client.get_gear),
-        "personal_records": call("personal records", client.get_personal_records),
-        "active_goals": call("active goals", client.get_active_goals),
-        "future_goals": call("future goals", client.get_future_goals),
-        "past_goals": call("past goals", client.get_past_goals),
+        "device_last_used": device_last_used,
+        "gear": gear,
+        "personal_records": call("personal records", client.get_personal_record),
+        "active_goals": call("active goals", client.get_goals, "active"),
+        "future_goals": call("future goals", client.get_goals, "future"),
+        "past_goals": call("past goals", client.get_goals, "past"),
     }
     save_json(os.path.join(out_dir, "profile.json"), profile)
 
@@ -155,7 +165,8 @@ def export_activities(client: Garmin, out_dir: str, limit: int, download_files: 
 
         if download_files:
             try:
-                raw = client.download_activity(activity_id, dl_fmt=activity_format)
+                dl_fmt = Garmin.ActivityDownloadFormat[activity_format]
+                raw = client.download_activity(activity_id, dl_fmt=dl_fmt)
                 ext = {"ORIGINAL": "zip", "TCX": "tcx", "GPX": "gpx", "KML": "kml", "CSV": "csv"}.get(
                     activity_format, "bin"
                 )
