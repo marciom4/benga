@@ -86,3 +86,26 @@ python3 export_data.py --download-files
 Se der erro de limite de requisições (429) no meio do processo, não tem
 problema: tudo que já foi baixado até ali já está salvo em `data/`. Espere
 um tempo e rode de novo.
+
+## Uso em rotina automática (`daily_snapshot.py`)
+
+`connect.py` e `export_data.py` são feitos pra rodar com você digitando a
+senha no seu terminal. Uma rotina agendada (ex: um briefing diário) roda
+sozinha, sem ninguém pra digitar nada — então `daily_snapshot.py` usa as
+variáveis de ambiente `GARMIN_EMAIL` e `GARMIN_PASSWORD` em vez de pedir
+interativamente.
+
+**Nunca digite sua senha no chat.** Cadastre `GARMIN_EMAIL` e
+`GARMIN_PASSWORD` nas configurações do seu ambiente Claude Code (fora
+deste repositório e fora de qualquer conversa) — o script só lê essas
+variáveis do ambiente onde ele roda.
+
+```bash
+GARMIN_EMAIL=... GARMIN_PASSWORD=... python3 daily_snapshot.py
+```
+
+Ele imprime um JSON com sono, estresse, body battery, prontidão/status de
+treino, HRV e tendência de VO2 máx dos últimos 7 dias. Se o login falhar
+por qualquer motivo (variáveis não configuradas, a Garmin pedir código de
+verificação em duas etapas, limite de requisições), ele só imprime o
+motivo em stderr e sai — não trava esperando alguém digitar algo.
