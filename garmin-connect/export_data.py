@@ -113,14 +113,12 @@ def export_trends(client: Garmin, out_dir: str, start: str, end: str) -> None:
     print(f"Trends {start} to {end} (one request per metric)...")
     trends = {
         "daily_steps": call("daily steps", client.get_daily_steps, start, end),
-        "resting_heart_rate": call("resting heart rate", client.get_rhr_daily, start, end),
-        "sleep": call("sleep", client.get_sleep_daily, start, end),
-        "calories": call("calories", client.get_calories_daily, start, end),
         "body_battery": call("body battery", client.get_body_battery, start, end),
-        "hrv": call("HRV", client.get_hrv_data_range, start, end),
-        "max_metrics": call("max metrics (VO2 max etc)", client.get_max_metrics_range, start, end),
         "intensity_minutes": call("weekly intensity minutes", client.get_weekly_intensity_minutes, start, end),
     }
+    # Resting heart rate, sleep, calories, HRV and VO2 max don't have a
+    # range/batch endpoint in the installed garminconnect version — they're
+    # fetched per day in export_daily_details() below instead.
     save_json(os.path.join(out_dir, "trends.json"), trends)
 
 
@@ -142,6 +140,8 @@ def export_daily_details(client: Garmin, out_dir: str, days: int) -> None:
             "body_composition": call("  body composition", client.get_body_composition, day),
             "training_readiness": call("  training readiness", client.get_training_readiness, day),
             "training_status": call("  training status", client.get_training_status, day),
+            "hrv": call("  HRV", client.get_hrv_data, day),
+            "vo2max": call("  VO2 max", client.get_max_metrics, day),
         }
         save_json(os.path.join(out_dir, "daily", f"{day}.json"), details)
 

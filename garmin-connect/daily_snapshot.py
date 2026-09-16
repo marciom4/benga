@@ -74,8 +74,8 @@ def main() -> None:
         "body_battery": safe(client.get_body_battery, week_ago, today),
         "training_readiness": safe(client.get_training_readiness, today),
         "training_status": safe(client.get_training_status, today),
-        "hrv": safe(client.get_hrv_data_range, week_ago, today),
-        "vo2max_trend": safe(client.get_max_metrics_range, week_ago, today),
+        "hrv": safe(client.get_hrv_data, today),
+        "vo2max": safe(client.get_max_metrics, today),
     }
     print(json.dumps(snapshot, ensure_ascii=False, default=str))
 
