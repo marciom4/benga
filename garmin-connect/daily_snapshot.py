@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
-"""Non-interactive Garmin Connect snapshot for scheduled routines.
+"""Non-interactive Garmin snapshot for scheduled routines.
 
-Unlike connect.py / export_data.py (built for a human typing a password in
-their own terminal), this script is meant to run unattended inside a
-scheduled routine. It reads credentials from the GARMIN_EMAIL and
-GARMIN_PASSWORD environment variables — set those in your Claude Code
-environment settings, never pass them in chat or hardcode them here.
+Uses Garmin's official Personal API client (not a reverse-engineered login),
+so there's no password, no MFA prompt, and no bot-detection cat-and-mouse —
+just a single API key. Reads it from the GARMIN_PERSONAL_API_KEY environment
+variable, which you set in your Claude Code environment settings. Never pass
+it in chat or hardcode it here.
 
-If login fails for any reason (missing env vars, Garmin asking for an MFA
-code with no one to answer it, a rate limit, a network error), this prints
-a one-line reason to stderr and exits non-zero instead of hanging or
-crashing with a traceback. The calling routine should treat that as "no
-Garmin data today" and continue rather than stop the whole briefing.
+Create the key at Garmin Connect -> Settings -> "Chave de API pessoal"
+(https://connect.garmin.com/app/settings/personalApiToken). Keys expire
+(30-365 days, your choice); Garmin emails a reminder about a week before.
+
+If the key is missing, expired, or revoked, this prints a one-line reason to
+stderr and exits non-zero instead of crashing — the calling routine should
+treat that as "no Garmin data today" and continue.
 
 On success, prints a single JSON object to stdout with recent recovery/
-training metrics (sleep, stress, body battery, training readiness/status,
-HRV, VO2max trend, resting heart rate).
+training metrics (sleep, stress, body battery, HRV, resting heart rate,
+fitness age).
 """
 
 import json
@@ -24,18 +26,9 @@ import sys
 from datetime import date, timedelta
 
 try:
-    from garminconnect import (
-        Garmin,
-        GarminConnectAuthenticationError,
-        GarminConnectConnectionError,
-        GarminConnectTooManyRequestsError,
-    )
+    from garmin_personal_api import GarminPersonalApiClient, PersonalApiAuthenticator
 except ImportError:
-    sys.exit("garminconnect is not installed. Run: pip install garminconnect curl_cffi")
-
-
-def _mfa_unavailable() -> str:
-    raise RuntimeError("Garmin asked for an MFA code, but this is an unattended run")
+    sys.exit("garmin-connect-personal-api-python is not installed. Run: pip install -r requirements.txt")
 
 
 def safe(fn, *args):
@@ -46,37 +39,30 @@ def safe(fn, *args):
 
 
 def main() -> None:
-    email = os.getenv("GARMIN_EMAIL")
-    password = os.getenv("GARMIN_PASSWORD")
-    if not email or not password:
-        sys.exit("GARMIN_EMAIL/GARMIN_PASSWORD not set, skipping Garmin data")
+    api_key = os.getenv("GARMIN_PERSONAL_API_KEY")
+    if not api_key:
+        sys.exit("GARMIN_PERSONAL_API_KEY not set, skipping Garmin data")
 
-    client = Garmin(email, password, prompt_mfa=_mfa_unavailable)
     try:
-        client.login()
-    except (
-        GarminConnectAuthenticationError,
-        GarminConnectConnectionError,
-        GarminConnectTooManyRequestsError,
-        RuntimeError,
-    ) as err:
+        with PersonalApiAuthenticator() as authenticator:
+            token = authenticator.obtain_token(api_key)
+    except Exception as err:
         sys.exit(f"Garmin login failed, skipping Garmin data: {err}")
 
     today = date.today().isoformat()
     week_ago = (date.today() - timedelta(days=7)).isoformat()
 
-    heart_rates = safe(client.get_heart_rates, today) or {}
-    snapshot = {
-        "date": today,
-        "resting_heart_rate": heart_rates.get("restingHeartRate"),
-        "sleep": safe(client.get_sleep_data, today),
-        "stress": safe(client.get_all_day_stress, today),
-        "body_battery": safe(client.get_body_battery, week_ago, today),
-        "training_readiness": safe(client.get_training_readiness, today),
-        "training_status": safe(client.get_training_status, today),
-        "hrv": safe(client.get_hrv_data, today),
-        "vo2max": safe(client.get_max_metrics, today),
-    }
+    with GarminPersonalApiClient(token.access_token) as client:
+        snapshot = {
+            "date": today,
+            "heart_rate": safe(client.get_daily_heart_rate, today),
+            "sleep": safe(client.get_daily_sleep, today),
+            "stress": safe(client.get_daily_stress, today, today),
+            "body_battery": safe(client.get_daily_body_battery, week_ago, today),
+            "hrv": safe(client.get_daily_hrv, today),
+            "fitness_age": safe(client.get_fitness_age, today),
+        }
+
     print(json.dumps(snapshot, ensure_ascii=False, default=str))
 
 
